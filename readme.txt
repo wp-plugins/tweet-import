@@ -3,7 +3,7 @@ Contributors: afiouni
 Tags: twitter, tweet, favorites, list, user timeline, tags, hashtags, admin, multiple authors, import
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable tag: 1.2
+Stable Tag: 1.2
 
 == Description ==
 
