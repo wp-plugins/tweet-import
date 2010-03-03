@@ -3,7 +3,7 @@
 Plugin Name: Tweet Import
 Plugin URI: http://skinju.com/wordpress/tweet-import
 Description: A WordPress plugin that imports twitter posts from multiple twitter accounts, favorites, and lists to WordPress. It allows importing each account, favorite or list to different categories, and allows tagging imported tweets using the tweet content #hashtags. Requires no authentication and can be used to import the user posted tweets and retweets from the specified twitter accounts and lists.
-Version: 1.2
+Version: 1.2.1
 Author: Khaled Afiouni
 Author URI: http://www.afiouni.com/
 Lincense: Released under the GPL license (http://www.opensource.org/licenses/gpl-license.php)
