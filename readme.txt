@@ -3,7 +3,7 @@ Contributors: afiouni
 Tags: twitter, tweet, favorites, list, user timeline, tags, hashtags, admin, multiple authors, import
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable Tag: 1.2
+Stable Tag: 1.2.1
 
 == Description ==
 
@@ -21,9 +21,9 @@ Tweet Import allows importing the following types of Twitter feeds:
 
 For every imported feed, Tweet Import supports the following options:
 
-* Assign a specific author for the imported tweets. This is useful if multiple authors use the same WordPress installation.
-* Import Twets to a specific category.
-* Add user defined tags to the imported tweets and created posts.
+* Assign a specific author for the imported tweets. This is useful if multiple authors use the same WordPress installation
+* Import Twets to a specific category
+* Add user defined tags to the imported tweets and created posts
 * Identify Twitter user names and make them clickable to their Twitter public profile pages
 * Extract #hashtags from the tweet content and add them as tags to the created posts
 * Make #hashtags clickable to either the Twitter search page or locally to the tag page on the local site
@@ -36,13 +36,14 @@ Installing Tweet Import is a standard WordPress installation. Just follow those 
 2. Activate the plugin from the Plugins admin menu in WordPress
 
 = Usage =
-1. Activating this plugin will add a new admin menu section called skinju. Tweet Import settings can be accessed directly through this You will find 'Contact' menu in your WordPress admin panel.
-2. Go to skinju -> Tweet Import and add/edit feeds and set their options.
+1. Activating this plugin will add a new admin menu section called skinju with a link to Tweet Import configuration page in it
+2. Go to skinju -> Tweet Import and add/edit feeds and set their options
 
 == Like this plugin? ==
 
 = Keep up to date =
 If you like this work, you can keep up to date with the latest news and releases of skinju packages and plugins. You can:
+
 * Follow [skinju on Twitter](http://twitter.com/skinju "http://twitter.com/skinju") to keep up to date on bug fixes and releases
 
 = Let Others Know =
@@ -51,7 +52,19 @@ You can also help spread the word and let others know about it. You can:
 * Link to skinju website http://skinju.com/
 * Give the plugins good ratings on the plugin pages on WordPress.org
 
+== Screenshots ==
+
+1. skinju Admin Menu Section: This is Where the Tweet Import menu item is added after activating the plugin
+2. Twitter Feed Info: Define the Twitter User name or list name to be imported
+3. Import Options: Chose what Author and Category to assign to new posts, add user defined tags or the tweet #hashtags to created posts, make Twitter names clickable to their Twitter account, and #hashtags options to make them clickable locally to tags pages or to the Twitter search page
+4. Feeds Info: A complete description of the already added feeds for importing. Options include Activating/Deactivation a feed, updating its options, or deleting it. Also an option to reset statistics is included
+5. Global Configuration: Chose how often Tweet Import should check for new tweets. Options include: Once Every 15 Minutes, Four Times a Day, Once Hourly, Twice Daily, and Once Daily
+
+
 == Changelog ==
+
+= 1.2.1 =
+* Added Screenshots
 
 = 1.2 =
 * Added the ability to import lists
