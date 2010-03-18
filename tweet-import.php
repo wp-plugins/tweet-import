@@ -3,7 +3,7 @@
 Plugin Name: Tweet Import
 Plugin URI: http://skinju.com/wordpress/tweet-import
 Description: A WordPress plugin that imports twitter posts from multiple twitter accounts, favorites, and lists to WordPress. It allows importing each account, favorite or list to different categories, and allows tagging imported tweets using the tweet content #hashtags. Requires no authentication and can be used to import the user posted tweets and retweets from the specified twitter accounts and lists.
-Version: 1.2.1
+Version: 1.2.2
 Author: Khaled Afiouni
 Author URI: http://www.afiouni.com/
 Lincense: Released under the GPL license (http://www.opensource.org/licenses/gpl-license.php)
@@ -211,6 +211,8 @@ if (!function_exists('tweetimport_options')):
 function tweetimport_options()
 {
   skinju_valid_privileges_or_die ('manage_tweetimport');
+
+  $tweetimport_options = get_option ('skinju_tweet_import');
 
   echo '<div class="wrap">';
 
@@ -686,16 +688,20 @@ function tweetimport_import_twitter_feed($twitter_account)
     if (!$item) continue;
 
     $processed_description = $item->get_description();
+
+    //Get the twitter author from the beginning of the tweet text
+    $twitter_author = trim(preg_replace("~^(\w+):(.*?)$~", "\\1", $processed_description));
+
     if ($twitter_account['names_clickable'] == 1):
       $processed_description = preg_replace("~@(\w+)~", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $processed_description);
-      $processed_description = preg_replace("~^(\w+):~", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">\\1</a>", $processed_description);
+      $processed_description = preg_replace("~^(\w+):~", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>:", $processed_description);
     endif;
 
     if ($twitter_account['hashtags_clickable'] == 1):
       if ($twitter_account['hashtags_clickable_twitter'] == 1):
           $processed_description = preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $processed_description);
       else:
-        $processed_description = $ret = preg_replace("/#(\w+)/", "<a href=\"" . skinju_get_tag_link("\\1") . "\">#\\1</a>", $processed_description);
+        $processed_description = preg_replace("/#(\w+)/", "<a href=\"" . skinju_get_tag_link("\\1") . "\">#\\1</a>", $processed_description);
       endif;
     endif;
 
@@ -714,7 +720,8 @@ function tweetimport_import_twitter_feed($twitter_account)
     $new_post_id = wp_insert_post($new_post);
 
     $imported_count++;
- 
+
+    add_post_meta ($new_post_id, 'tweetimport_twitter_author', $twitter_author, true); 
     add_post_meta ($new_post_id, 'tweetimport_date_imported', date ('Y-m-d H:i:s'), true);
     add_post_meta ($new_post_id, 'tweetimport_twitter_id', $item->get_id(), true);
     add_post_meta ($new_post_id, 'tweetimport_twitter_id', $item->get_id(), true);
