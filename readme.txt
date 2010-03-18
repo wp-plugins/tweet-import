@@ -3,7 +3,7 @@ Contributors: afiouni
 Tags: twitter, tweet, favorites, list, user timeline, tags, hashtags, admin, multiple authors, import
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable Tag: 1.2.1
+Stable Tag: 1.2.2
 
 == Description ==
 
@@ -62,6 +62,11 @@ You can also help spread the word and let others know about it. You can:
 
 
 == Changelog ==
+
+= 1.2.2 =
+* Added the Twitter name for the imported tweet in a new meta (custome field): 'tweetimport_twitter_author'
+* Fixed some inconsistencies related to @name parsing. Some names did miss the "@" sign when converted to yperlinks
+* Kept the ":" character displayed after the author name in imported tweets when the user @name is converted to hyperlink
 
 = 1.2.1 =
 * Added Screenshots
