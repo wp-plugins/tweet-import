@@ -3,7 +3,7 @@ Contributors: afiouni
 Tags: twitter, tweet, favorites, list, user timeline, tags, hashtags, admin, multiple authors, import
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable Tag: 1.2.2
+Stable Tag: 1.2.3
 
 == Description ==
 
@@ -27,10 +27,13 @@ For every imported feed, Tweet Import supports the following options:
 * Identify Twitter user names and make them clickable to their Twitter public profile pages
 * Extract #hashtags from the tweet content and add them as tags to the created posts
 * Make #hashtags clickable to either the Twitter search page or locally to the tag page on the local site
+* Remove the name of the Twitter author [ @name: ] prefix from imported tweets
 * Identify links in tweet content and make them clickable to their respective URL's
 
 == Installation ==
-Installing Tweet Import is a standard WordPress installation. Just follow those simple steps.
+Try the automated installation this plugin allows by trying it at [plugin page](http://skinju.com/wordpress/tweet-import "http://skinju.com/wordpress/tweet-import")
+
+You can of course follow the stanard installation process. Just follow those simple steps.
 
 1. Upload the entire Tweet Import directory to the /wp-content/plugins/ directory
 2. Activate the plugin from the Plugins admin menu in WordPress
@@ -56,12 +59,16 @@ You can also help spread the word and let others know about it. You can:
 
 1. skinju Admin Menu Section: This is Where the Tweet Import menu item is added after activating the plugin
 2. Twitter Feed Info: Define the Twitter User name or list name to be imported
-3. Import Options: Chose what Author and Category to assign to new posts, add user defined tags or the tweet #hashtags to created posts, make Twitter names clickable to their Twitter account, and #hashtags options to make them clickable locally to tags pages or to the Twitter search page
+3. Import Options: Chose what Author and Category to assign to new posts, add user defined tags or the tweet #hashtags to created posts, make Twitter names clickable to their Twitter account, #hashtags options to make them clickable locally to tags pages or to the Twitter search page, and remove the prefix @name from tweets
 4. Feeds Info: A complete description of the already added feeds for importing. Options include Activating/Deactivation a feed, updating its options, or deleting it. Also an option to reset statistics is included
 5. Global Configuration: Chose how often Tweet Import should check for new tweets. Options include: Once Every 15 Minutes, Four Times a Day, Once Hourly, Twice Daily, and Once Daily
 
 
 == Changelog ==
+
+= 1.2.3 =
+* Added the option to remove the [ @name: ] prefix from imported tweets
+* Added a link to the auto install option on the [plugin page](http://skinju.com/wordpress/tweet-import "http://skinju.com/wordpress/tweet-import")
 
 = 1.2.2 =
 * Added the Twitter name for the imported tweet in a new meta (custome field): 'tweetimport_twitter_author'

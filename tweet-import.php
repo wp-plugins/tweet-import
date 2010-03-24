@@ -3,7 +3,7 @@
 Plugin Name: Tweet Import
 Plugin URI: http://skinju.com/wordpress/tweet-import
 Description: A WordPress plugin that imports twitter posts from multiple twitter accounts, favorites, and lists to WordPress. It allows importing each account, favorite or list to different categories, and allows tagging imported tweets using the tweet content #hashtags. Requires no authentication and can be used to import the user posted tweets and retweets from the specified twitter accounts and lists.
-Version: 1.2.2
+Version: 1.2.3
 Author: Khaled Afiouni
 Author URI: http://www.afiouni.com/
 Lincense: Released under the GPL license (http://www.opensource.org/licenses/gpl-license.php)
@@ -351,7 +351,8 @@ function tweetimport_display_account_list_table()
       echo 'Tag with the tweets #hashtags as well: <strong>' . ($account['hash_tag']==1?'Yes':'No') . '</strong><br />';
       echo 'Make #hashtags clickable: <strong>' . ($account['hashtags_clickable']==1?'Yes':'No') . '</strong>, ';
       echo ' <strong>' . ($account['hashtags_clickable']==1?($account['hashtags_clickable_twitter']==1?'to twitter':'Locally'):'') . '</strong><br />';
-      echo '<p></td>';
+      echo 'Remove @name Prefix: <strong>' . ($account['strip_name']==1?'Yes':'No') . '</strong><br />';
+      echo '</p></td>';
       echo '</tr>';
       echo '<tr class="second ' . ($account['active']?'active':'inactive') . '">';
       echo '<td>&nbsp;</td>';
@@ -498,6 +499,16 @@ function tweetimport_display_account_add_edit_form($mode="add", $account_details
   echo '<p>Would you like Tweet Import to make #hashtags clickable? If so, would you like the link to point to the tag page locally, or the search page on twitter?</p>';
   echo '</div>';
 
+  echo '<div class="form-field form-required">';
+  echo '<label for="account_hashtags">Remove Prefixed @name</label>';
+  echo '<select name="strip_name" id="strip_name">';
+  if (!isset ($account_details['strip_name'])) $account_details['hash_tag'] = 0;
+  echo '<option value="0" ' . ($account_details['strip_name']!=1?'selected="selected"':'') . '>No</option>';
+  echo '<option value="1" ' . ($account_details['strip_name']==1?'selected="selected"':'') . '>Yes</option>';
+  echo '</select>';
+  echo '<p>By default Twitter includes the @name of the Twitter user at the beginning of the tweet as [ @name: ]. Would you like Tweet Import to remove this name from the beginning of the imported tweets?</p>';
+  echo '</div>';
+
   echo '</fieldset>';
 
   echo '<p class="submit">';
@@ -610,6 +621,7 @@ function tweetimport_handle_request()
         $new_account['names_clickable'] = trim($_POST['names_clickable']); 
         $new_account['hashtags_clickable'] = trim($_POST['hashtags_clickable']); 
         $new_account['hashtags_clickable_twitter'] = trim($_POST['hashtags_clickable_twitter']);
+        $new_account['strip_name'] = trim($_POST['strip_name']);
         $new_account['imported_count'] = 'No'; 
         $new_account['active'] = true; 
         $new_account['last_checked'] = '(Never)'; 
@@ -630,6 +642,7 @@ function tweetimport_handle_request()
         $new_account['names_clickable'] = trim($_POST['names_clickable']); 
         $new_account['hashtags_clickable'] = trim($_POST['hashtags_clickable']); 
         $new_account['hashtags_clickable_twitter'] = trim($_POST['hashtags_clickable_twitter']);
+        $new_account['strip_name'] = trim($_POST['strip_name']);
         $new_account['active'] = true; 
         $tweetimport_options['twitter_accounts'][$new_account_name] = array_merge ($tweetimport_options['twitter_accounts'][$new_account_name], $new_account);
         update_option ('skinju_tweet_import', $tweetimport_options);
@@ -692,6 +705,10 @@ function tweetimport_import_twitter_feed($twitter_account)
     //Get the twitter author from the beginning of the tweet text
     $twitter_author = trim(preg_replace("~^(\w+):(.*?)$~", "\\1", $processed_description));
 
+    if ($twitter_account['strip_name'] == 1):
+      $processed_description = preg_replace("~^(\w+):(.*?)~i", "\\2", $processed_description);
+    endif;
+
     if ($twitter_account['names_clickable'] == 1):
       $processed_description = preg_replace("~@(\w+)~", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $processed_description);
       $processed_description = preg_replace("~^(\w+):~", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>:", $processed_description);
@@ -709,7 +726,7 @@ function tweetimport_import_twitter_feed($twitter_account)
   $processed_description = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $processed_description);
 
     $new_post = array('post_title' => trim (substr (preg_replace("~{$account_parts[0]}: ~i", "", $item->get_title()), 0, 25) . '...'),
-                      'post_content' => trim (preg_replace("~{$account_parts[0]}: ~i", "", $processed_description)),
+                      'post_content' => trim ($processed_description),
                       'post_date' => $item->get_date('Y-m-d H:i:s'),
                       'post_author' => $twitter_account['author'],
                       'post_category' => array($twitter_account['category']),
