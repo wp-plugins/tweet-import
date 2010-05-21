@@ -3,7 +3,7 @@ Contributors: afiouni
 Tags: twitter, tweet, favorites, list, user timeline, tags, hashtags, admin, multiple authors, import
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable Tag: 1.2.3
+Stable Tag: 1.3
 
 == Description ==
 
@@ -65,6 +65,9 @@ You can also help spread the word and let others know about it. You can:
 
 
 == Changelog ==
+
+= 1.3 =
+* Added a new filter to allow changing the caching duration of the Twitter response to go hand in hand with more frequent updates
 
 = 1.2.3 =
 * Added the option to remove the [ @name: ] prefix from imported tweets
